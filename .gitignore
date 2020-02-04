@@ -1,0 +1,25 @@
+# IDEs and editors
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+*.launch
+*.sublime-workspace
+.c9/
+.classpath
+.project
+.settings/
+.vscode/*
+.idea/
+
+# Logs
+*.log
+logs/*
+
+# Python compiled and cache files
+*.pyc
+*.pyo
+__pycache__/
+
+# Version control
+*.orig
