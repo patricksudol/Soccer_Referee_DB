@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Soccer_Referee_DB.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -68,18 +68,22 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Soccer_Referee_DB.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'soccerrefereedb',
+        'USER': 'soccerrefereedbuser',
+        'PASSWORD': 'EbyOJdKaRJ4C3oLN',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 
 # Password validation
