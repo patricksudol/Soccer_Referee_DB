@@ -1,5 +1,6 @@
 import uuid
-
+from django.contrib.auth.models import User
+from django.utils import timezone
 from django.db import models
 
 
@@ -12,12 +13,12 @@ class BaseModel(models.Model):
         default=uuid.uuid4
     )
 
-    created_at = models.DateTimeField(default.timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
 
     modified_at = models.DateTimeField(auto_now=True)
 
     created_by = models.ForeignKey(
-        User, null=True, related_name='created_%(class)ss'
+        User, null=True, related_name='created_%(class)ss', on_delete=models.CASCADE
     )
 
     class Meta:
