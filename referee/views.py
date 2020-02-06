@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+def referees(request):
+    context = {}
+    return render(request, 'referees.html', context)
+
