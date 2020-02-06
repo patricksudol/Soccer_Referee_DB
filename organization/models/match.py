@@ -1,6 +1,6 @@
 from django.db import models
 
-from base.models.BaseModel import BaseModel
+from base.models.abstract_base_model import BaseModel
 from organization.models.club import Club
 from organization.models.season import Season
 from referee.models.referee import Referee
@@ -8,43 +8,79 @@ from referee.models.referee import Referee
 
 class Match(BaseModel):
 
-    match_id = models.CharField()
+    match_id = models.CharField(max_length=12)
 
-    season = models.ForeignKey(Season)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
 
     match_date = models.DateField()
 
     week = models.IntegerField()
 
-    day = models.CharField()
+    day = models.CharField(max_length=1)
 
-    home_club = models.ForeignKey(Club)
+    home_club = models.ForeignKey(
+        Club, 
+        on_delete=models.CASCADE,
+        related_name='home_matches'
+    )
 
-    away_club = models.ForeignKey(Club)
+    away_club = models.ForeignKey(
+        Club, 
+        on_delete=models.CASCADE,
+        related_name='away_matches'
+    )
 
     home_score = models.IntegerField()
 
     away_score = models.IntegerField()
 
-    result = models.CharField()
+    result = models.CharField(max_length=1)
 
-    _round = models.CharField()
+    _round = models.CharField(max_length=10)
 
     leg = models.IntegerField()
 
-    referee = models.ForeignKey(Referee)
+    referee = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='referee_matches'
+    )
 
-    ar1 = models.ForeignKey(Referee)
+    ar1 = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='ar1_matches'
+    )
 
-    ar2 = models.ForeignKey(Referee)
+    ar2 = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='ar2_matches'
+    )
 
-    fourth_official = models.ForeignKey(Referee)
+    fourth_official = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='fourth_official_matches'
+    )
 
-    var_id = models.ForeignKey(Referee)
+    var_id = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='var_matches'
+    )
 
-    avar_id = models.ForeignKey(Referee)
+    avar_id = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='avar_matches'
+    )
 
-    fifth_official_id = models.ForeignKey(Referee)
+    fifth_official_id = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        related_name='fifth_official_matches'
+    )
 
     total_fouls = models.IntegerField()
 

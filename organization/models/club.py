@@ -1,11 +1,11 @@
 from django.db import models
 
-from base.models.BaseModel import BaseModel
+from base.models.abstract_base_model import BaseModel
 
 class Club(BaseModel):
     
-    club_id = models.CharField()
+    club_id = models.CharField(max_length=4)
 
-    name = models.CharField()
+    name = models.CharField(max_length=255)
 
     is_active = models.BooleanField(default=True)
