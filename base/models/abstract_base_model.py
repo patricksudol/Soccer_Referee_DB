@@ -28,3 +28,11 @@ class BaseModel(models.Model):
         super().__init__(*args, **kwargs)
         self.is_new = True
         self.original_data = {}
+
+# referee
+# club
+# matches
+# penalties
+# seasons
+# cards_red
+# cards_yellow
