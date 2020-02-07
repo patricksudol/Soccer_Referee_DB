@@ -8,13 +8,24 @@ from referee.models.referee import Referee
 
 class Penalty(BaseModel):
 
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    match = models.ForeignKey(
+        Match, 
+        on_delete=models.CASCADE, 
+        related_name='penalties'
+    )
 
-    referee = models.ForeignKey(Referee, on_delete=models.CASCADE)
+    referee = models.ForeignKey(
+        Referee, 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True, 
+        related_name='penalties'
+    )
 
     match_date = models.DateField()
 
-    _round = models.CharField(max_length=10)
+    # Round but can't use since Python keyword
+    stage = models.CharField(max_length=10, null=True, blank=True)
 
     club = models.ForeignKey(
         Club, 
@@ -31,6 +42,6 @@ class Penalty(BaseModel):
 
     order = models.IntegerField()
 
-    minute = models.IntegerField()
+    minute = models.IntegerField(null=True, blank=True)
 
-    foul_desc = models.CharField(max_length=127)
+    foul_desc = models.CharField(max_length=127, null=True, blank=True)

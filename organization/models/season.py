@@ -7,10 +7,10 @@ class Season(BaseModel):
 
     season = models.IntegerField()
 
-    date_begin = models.DateField()
+    date_begin = models.DateField(null=True, blank=True)
 
-    date_end_reg = models.DateField()
+    date_end_reg = models.DateField(null=True, blank=True)
 
-    date_begin_playoffs = models.DateField()
+    date_begin_playoffs = models.DateField(null=True, blank=True)
 
-    date_end_playoffs = models.DateField()
+    date_end_playoffs = models.DateField(null=True, blank=True)

@@ -1,5 +1,6 @@
 from django.db import models
 
+from base.constants import DAYS_OF_WEEK, RESULTS
 from base.models.abstract_base_model import BaseModel
 from organization.models.club import Club
 from organization.models.season import Season
@@ -14,9 +15,14 @@ class Match(BaseModel):
 
     match_date = models.DateField()
 
-    week = models.IntegerField()
+    week = models.IntegerField(null=True, blank=True)
 
-    day = models.CharField(max_length=1)
+    day = models.CharField(
+        choices=DAYS_OF_WEEK, 
+        max_length=1, 
+        null=True, 
+        blank=True
+    )
 
     home_club = models.ForeignKey(
         Club, 
@@ -34,11 +40,12 @@ class Match(BaseModel):
 
     away_score = models.IntegerField()
 
-    result = models.CharField(max_length=1)
+    result = models.CharField(choices=RESULTS, max_length=1)
 
-    _round = models.CharField(max_length=10)
+    # Round but it is a Python keywoard so can not use
+    stage = models.CharField(max_length=10, null=True, blank=True)
 
-    leg = models.IntegerField()
+    leg = models.IntegerField(null=True, blank=True)
 
     referee = models.ForeignKey(
         Referee, 
@@ -61,53 +68,55 @@ class Match(BaseModel):
     fourth_official = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
-        related_name='fourth_official_matches'
+        related_name='fourth_official_matches',
+        null=True,
+        blank=True
     )
 
     var_id = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
-        related_name='var_matches'
+        related_name='var_matches',
+        null=True,
+        blank=True
     )
 
     avar_id = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
-        related_name='avar_matches'
+        related_name='avar_matches',
+        null=True,
+        blank=True
     )
 
     fifth_official_id = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
-        related_name='fifth_official_matches'
+        related_name='fifth_official_matches',
+        null=True,
+        blank=True
     )
 
-    total_fouls = models.IntegerField()
+    total_fouls = models.IntegerField(default=0)
 
-    home_fouls = models.IntegerField()
+    home_fouls = models.IntegerField(default=0)
 
-    away_fouls = models.IntegerField()
+    away_fouls = models.IntegerField(default=0)
 
-    total_cards_yellow = models.IntegerField()
+    total_cards_yellow = models.IntegerField(default=0)
 
-    home_cards_yellow = models.IntegerField()
+    home_cards_yellow = models.IntegerField(default=0)
 
-    away_cards_yellow = models.IntegerField()
+    away_cards_yellow = models.IntegerField(default=0)
 
-    total_cards_red = models.IntegerField()
+    total_cards_red = models.IntegerField(default=0)
 
-    home_cards_red = models.IntegerField()
+    home_cards_red = models.IntegerField(default=0)
 
-    away_card_red = models.IntegerField()
+    away_card_red = models.IntegerField(default=0)
 
-    total_penalties = models.IntegerField()
+    total_penalties = models.IntegerField(default=0)
 
-    home_penalties = models.IntegerField()
+    home_penalties = models.IntegerField(default=0)
 
-    away_penalties = models.IntegerField()
-
-
-
-
-
-    
+    away_penalties = models.IntegerField(default=0)

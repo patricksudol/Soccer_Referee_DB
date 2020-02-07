@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from referee.models.referee import Referee
+
+admin.site.register(Referee)
