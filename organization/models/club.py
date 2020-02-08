@@ -2,6 +2,7 @@ from django.db import models
 
 from base.models.abstract_base_model import BaseModel
 
+
 class Club(BaseModel):
     
     club_id = models.CharField(max_length=4)

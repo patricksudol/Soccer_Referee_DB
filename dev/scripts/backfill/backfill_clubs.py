@@ -62,7 +62,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with transaction.atomic():
-        django.setup()
         main(args)
         if not args.commit:
             raise DryRunException()
