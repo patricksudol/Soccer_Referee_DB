@@ -52,7 +52,7 @@ class BaseModel(models.Model):
 
     def _to_dict(self):
         data_json = serialize('json', [self])
-        data_dict = json.loads(data_json[0]['fields'])
+        data_dict = json.loads(data_json)[0]['fields']
         return OrderedDict(
             sorted(data_dict.items(), key=lambda x: x[0].lower())
         )

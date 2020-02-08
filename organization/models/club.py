@@ -9,3 +9,7 @@ class Club(BaseModel):
     name = models.CharField(max_length=255, null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        status = 'active' if self.is_active else 'not active'
+        return f'{self.name} [{self.club_id}] is {status}'
