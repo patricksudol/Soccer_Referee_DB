@@ -46,7 +46,6 @@ def main(args):
             is_active=True if club[2] == 1 else False
         )
         print(created_club.id)
-        
 
 
 if __name__ == '__main__':

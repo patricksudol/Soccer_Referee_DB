@@ -13,7 +13,7 @@ class Referee(BaseModel):
 
     name_family = models.CharField(max_length=40)
 
-    suffix = models.CharField(max_length=10)
+    suffix = models.CharField(max_length=10, null=True, blank=True)
 
     name_sort = models.CharField(max_length=80)
 
@@ -22,3 +22,7 @@ class Referee(BaseModel):
     is_active = models.BooleanField(default=False)
 
     is_active_onfield = models.BooleanField(default=False)
+
+    def __str__(self):
+        status = 'active' if self.is_active else 'not active'
+        return f'{self.name_common} [{self.referee_id}] is {status}'

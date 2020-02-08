@@ -14,3 +14,6 @@ class Season(BaseModel):
     date_begin_playoffs = models.DateField(null=True, blank=True)
 
     date_end_playoffs = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.season}: {self.date_begin} through {self.date_end_reg}'

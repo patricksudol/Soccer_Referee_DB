@@ -73,7 +73,7 @@ class Match(BaseModel):
         blank=True
     )
 
-    var_id = models.ForeignKey(
+    var = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
         related_name='var_matches',
@@ -81,7 +81,7 @@ class Match(BaseModel):
         blank=True
     )
 
-    avar_id = models.ForeignKey(
+    avar = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
         related_name='avar_matches',
@@ -89,7 +89,7 @@ class Match(BaseModel):
         blank=True
     )
 
-    fifth_official_id = models.ForeignKey(
+    fifth_official = models.ForeignKey(
         Referee, 
         on_delete=models.CASCADE,
         related_name='fifth_official_matches',
@@ -113,10 +113,16 @@ class Match(BaseModel):
 
     home_cards_red = models.IntegerField(default=0)
 
-    away_card_red = models.IntegerField(default=0)
+    away_cards_red = models.IntegerField(default=0)
 
     total_penalties = models.IntegerField(default=0)
 
     home_penalties = models.IntegerField(default=0)
 
     away_penalties = models.IntegerField(default=0)
+
+    def __str__(self):
+        return (
+            f'{self.match_date}: {self.home_club}'
+            f'[{self.home_score}] vs {self.away_club}[{self.away_score}]'
+        )

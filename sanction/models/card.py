@@ -32,7 +32,7 @@ class AbstractCardModel(BaseModel):
 
     class Meta:
         abstract = True
-
+    
 
 class YellowCard(AbstractCardModel):
 
@@ -55,6 +55,12 @@ class YellowCard(AbstractCardModel):
 
     is_2ct = models.BooleanField(default=False)
 
+    def __str__(self):
+        return (
+            f'Yellow card for {self.player_name} issued by '
+            f'{self.referee.name_common} on {self.match_date}'
+        )
+
 
 class RedCard(AbstractCardModel):
     
@@ -74,3 +80,9 @@ class RedCard(AbstractCardModel):
         blank=True,
         related_name='opponent_red_cards'
     )
+
+    def __str__(self):
+        return (
+            f'Red card for {self.player_name} issued by '
+            f'{self.referee.name_common} on {self.match_date}'
+        )
