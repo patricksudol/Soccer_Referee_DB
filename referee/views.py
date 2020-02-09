@@ -4,7 +4,7 @@ from referee.models.referee import Referee
 
 def referees(request):
     context = {}
-    refs = Referee.objects.all().order_by('name_family')[:10]
+    refs = Referee.objects.all().order_by('name_family')
     counter = 1
     referees_list = []
     for ref in refs:
