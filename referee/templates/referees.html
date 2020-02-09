@@ -3,16 +3,18 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-        <!--Navbar-->
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <nav class="navbar navbar-expand-lg navbar-light cyan lighten-5">
                 <div class="collapse navbar-collapse" id="basicExampleNav">
                     <form class="form-inline">
                         <div class="md-form my-0">
-                            <input class="form-control mr-sm-2" type="text" placeholder="First Name" aria-label="First Name">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Last Name" aria-label="Last Name">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Position" aria-label="Position">
+                            <input class="form-control mr-sm-2" type="text" placeholder="First Name"
+                                aria-label="First Name">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Last Name"
+                                aria-label="Last Name">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Position"
+                                aria-label="Position">
                             <a href="#" class="btn btn-primary">Search</a>
                         </div>
                     </form>
@@ -23,53 +25,32 @@
     </div>
     <br>
     <div class="container-fluid">
+        {% for referee in referees %}
+        {% if referee.first_in_row or referee.count == 1 %}
+        <br>
         <div class="row">
             <div class="col-md-2"></div>
+        {% endif %}
+        <!-- Card -->
             <div class="col-md-2">
                 <div class="card">
-                    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"
-                        alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title"><a>Mark Geiger</a></h4>
-                        <p class="card-text"><strong>DOB:</strong> 12/04/1991 <br><strong>Games:</strong> 100<br><strong>Yellow Cards:</strong> 50<br><strong>Red Cards:</strong> 5</p>
-                        <a href="#" class="btn btn-primary">Game Stats</a>
-                    </div>
+                    <img class="card-img-top" src={{ referee.image_url }} alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title"><strong>{{ referee.name }}</strong></h4>
+                            <p class="card-text">
+                                <strong>Total Matches: </strong>{{ referee.total_assignments_count }}<br>
+                                <strong>Debut Match: </strong> {{ referee.debut_match.date }}<br>
+                                {{ referee.debut_match.home_team }} vs {{ referee.debut_match.away_team }}
+                            </p>
+                            <a href="#" class="btn btn-primary">Statistics</a>
+                        </div>
                 </div>
             </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"
-                        alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title"><a>Mark Geiger</a></h4>
-                        <p class="card-text"><strong>DOB:</strong> 12/04/1991 <br><strong>Games:</strong> 100<br><strong>Yellow Cards:</strong> 50<br><strong>Red Cards:</strong> 5</p>
-                        <a href="#" class="btn btn-primary">Game Stats</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"
-                        alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title"><a>Mark Geiger</a></h4>
-                        <p class="card-text"><strong>DOB:</strong> 12/04/1991 <br><strong>Games:</strong> 100<br><strong>Yellow Cards:</strong> 50<br><strong>Red Cards:</strong> 5</p>
-                        <a href="#" class="btn btn-primary">Game Stats</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="card">
-                    <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg"
-                        alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title"><a>Mark Geiger</a></h4>
-                        <p class="card-text"><strong>DOB:</strong> 12/04/1991 <br><strong>Games:</strong> 100<br><strong>Yellow Cards:</strong> 50<br><strong>Red Cards:</strong> 5</p>
-                        <a href="#" class="btn btn-primary">Game Stats</a>
-                    </div>
-                </div>
-            </div>
+        {% if forloop.counter|divisibleby:4 %}
+            <div class="col-md-2"></div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
 
