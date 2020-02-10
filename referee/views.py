@@ -29,10 +29,34 @@ def referees(request):
     context['nbar'] = 'referees'
     return render(request, 'referees.html', context)
 
-def referee(request, referee_id):
+def referee_bio(request, referee_id):
     referee = Referee.objects.get(referee_id=referee_id)
-    matches = referee.all_assignments.all()
+    matches = referee.all_assignments.all().order_by('match_date')
     context = {}
+
+    
+    career_totals = {
+        'matches': matches.count(),
+        'yellow_cards': '',
+        'red_cards': '',
+        'fouls': '',
+        'penalties': ''
+    }
+    
     context['referee'] = referee
     context['matches'] = matches
+    context['first_match'] = matches.first()
+    context['last_match'] = matches.last()
     return render(request, 'referee.html', context)
+
+"""
+matches
+Yellow Card Count
+Red Card Count
+Y Card / game
+R Card / game
+foul count
+foul / game
+penalties count
+penalty / game
+"""

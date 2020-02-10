@@ -53,4 +53,3 @@ class Referee(BaseModel):
     def __str__(self):
         status = 'active' if self.is_active else 'not active'
         return f'{self.name_common} [{self.referee_id}] is {status}'
-
