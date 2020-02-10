@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 from referee.models.referee import Referee
 
@@ -14,6 +14,7 @@ def referees(request):
             'name': ref.name_common,
             'total_assignments_count': all.count(),
             'image_url': ref.image_url,
+            'referee_url': '/referees/' + ref.referee_id,
             'debut_match': {
                 'date': debut.match_date if debut else 'TBD',
                 'home_team': debut.home_club.name if debut else '',
@@ -28,3 +29,10 @@ def referees(request):
     context['nbar'] = 'referees'
     return render(request, 'referees.html', context)
 
+def referee(request, referee_id):
+    referee = Referee.objects.get(referee_id=referee_id)
+    matches = referee.all_assignments.all()
+    context = {}
+    context['referee'] = referee
+    context['matches'] = matches
+    return render(request, 'referee.html', context)

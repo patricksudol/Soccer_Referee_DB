@@ -3,7 +3,6 @@ from django.db import models
 from base.models.abstract_base_model import BaseModel
 
 
-
 class Referee(BaseModel):
 
     referee_id = models.CharField(max_length=7)
