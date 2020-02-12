@@ -33,28 +33,42 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Career Totals</h5>
+            <h5 class="card-title"><strong>Career Totals</strong></h5>
             <p class="card-text">
               <ul>
-                <li><strong>Matches: </strong></li>
-                <li><strong>Yellow Cards: </strong></li>
-                <li><strong>Red Cards: </strong></li>
-                <li><strong>Fouls: </strong></li>
-                <li><strong>Penalties: </strong></li>
+                {% if career_totals.centers %}
+                <li><strong>Centers: </strong>{{ career_totals.centers }}</li>
+                <li><strong>Fourth Officials: </strong>{{ career_totals.fourths }}</li>
+                <li><strong>Yellow Cards: </strong>{{ career_totals.yellow_cards }}</li>
+                <li><strong>Red Cards: </strong>{{ career_totals.red_cards }}</li>
+                <li><strong>Fouls: </strong>{{ career_totals.fouls }}</li>
+                <li><strong>Penalties: </strong>{{ career_totals.penalties }}</li>
+                {% else %}
+                <li><strong>Total Assignments: </strong>{{ career_totals.total_assignments }}</li>
+                <br>
+                <li><strong>AR 1 Assignments: </strong>{{ career_totals.ar1 }}</li>
+                <br>
+                <li><strong>AR 2 Assignments: </strong>{{ career_totals.ar2 }}</li>
+                {% endif %}
               </ul>
             </p>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Career Averages</h5>
+            {% if career_totals.centers%}
+            <h5 class="card-title"><strong>Career Averages</strong></h5>
+            {% else %}
+            <h5 class="card-title">Most Frequently Worked With Referees</h5>
+            {% endif %}
             <p class="card-text">
               <ul>
-                <li><strong>Matches: </strong></li>
-                <li><strong>Yellow Cards: </strong></li>
-                <li><strong>Red Cards: </strong></li>
-                <li><strong>Fouls: </strong></li>
-                <li><strong>Penalties: </strong></li>
+                {% if career_totals.centers %}
+                <li>{{ career_averages.yellow_cards }} Yellow Cards Per Game</li>
+                <li>1 Red Card Per {{ career_averages.red_cards }} Games</li>
+                <li>{{ career_averages.fouls }} Fouls Per Game</li>
+                <li>1 Penalty Per {{ career_averages.penalties }} Games</li>
+                {% endif %}
               </ul>
             </p>
           </div>

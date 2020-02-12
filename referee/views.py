@@ -1,6 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.db.models import Sum
+from django.shortcuts import render
 
+from organization.models.match import Match
 from referee.models.referee import Referee
+from sanction.models.card import YellowCard, RedCard
+from sanction.models.penalty import Penalty
+
 
 def referees(request):
     context = {}
@@ -34,29 +39,45 @@ def referee_bio(request, referee_id):
     matches = referee.all_assignments.all().order_by('match_date')
     context = {}
 
+    is_referee = bool(referee.referee_matches.count())
     
-    career_totals = {
-        'matches': matches.count(),
-        'yellow_cards': '',
-        'red_cards': '',
-        'fouls': '',
-        'penalties': ''
-    }
+    if is_referee:
+        career_totals = {
+            'centers': referee.referee_matches.count(),
+            'fourths': referee.fourth_official_matches.count(),
+            'yellow_cards': YellowCard.objects.filter(referee=referee).count(),
+            'red_cards': RedCard.objects.filter(referee=referee).count(),
+            'fouls': Match.objects.filter(referee=referee).aggregate(Sum('total_fouls'))['total_fouls__sum'],
+            'penalties': Penalty.objects.filter(referee=referee).count()
+        }
+    else:
+        career_totals = {
+            'total_assignments': referee.ar_assignments.count(),
+            'ar1': referee.ar1_matches.count(),
+            'ar2': referee.ar2_matches.count()
+        }
+
+    if is_referee:
+        career_averages = {
+            'yellow_cards': round(career_totals['yellow_cards'] / referee.referee_matches.count(), 2),
+            'red_cards': round(referee.referee_matches.count() / career_totals['red_cards'], 2),
+            'fouls': round(career_totals['fouls'] / referee.referee_matches.count(), 2),
+            'penalties': round(referee.referee_matches.count() / career_totals['penalties'], 2)
+        }
+    else:
+        career_averages = {
+            'yellow_cards': 0,
+            'red_cards': 0,
+            'fouls': 0,
+            'penalties': 0
+        }
+
+    print(career_averages['yellow_cards'])
     
     context['referee'] = referee
     context['matches'] = matches
     context['first_match'] = matches.first()
     context['last_match'] = matches.last()
+    context['career_totals'] = career_totals
+    context['career_averages'] = career_averages
     return render(request, 'referee.html', context)
-
-"""
-matches
-Yellow Card Count
-Red Card Count
-Y Card / game
-R Card / game
-foul count
-foul / game
-penalties count
-penalty / game
-"""
