@@ -8,7 +8,7 @@ from sanction.models.card import YellowCard, RedCard
 from sanction.models.penalty import Penalty
 
 
-def referees(request):
+def referees(request, page_number):
     context = {}
     refs = Referee.objects.all().order_by('name_family')
     counter = 1
@@ -31,10 +31,12 @@ def referees(request):
         }
         referees_list.append(ref_dict)
         counter += 1
-    paginator = Paginator(referees_list, 20)
-    page_number = request.GET.get('page')
+    paginator = Paginator(referees_list, 12)
+    print(referees_list)
     page_obj = paginator.get_page(page_number)
-    context['referees'] = referees_list
+    context['page_obj'] = page_obj
+    context['page_range'] = paginator.page_range
+    context['current_page_number'] = page_number
     context['nbar'] = 'referees'
     return render(request, 'referees.html', context)
 
