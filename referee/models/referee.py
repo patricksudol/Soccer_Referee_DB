@@ -26,6 +26,10 @@ class Referee(BaseModel):
     image_path = models.CharField(max_length=255, null=True, blank=True)
 
     @property
+    def is_referee(self):
+        return bool(self.referee_matches.count())
+
+    @property
     def ar_assignments(self):
         return self.ar1_matches.all() | self.ar2_matches.all()
 

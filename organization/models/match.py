@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms.models import model_to_dict
 
 from base.constants import DAYS_OF_WEEK, RESULTS
 from base.models.abstract_base_model import BaseModel
@@ -126,3 +127,16 @@ class Match(BaseModel):
             f'{self.match_date}: {self.home_club}'
             f'[{self.home_score}] vs {self.away_club}[{self.away_score}]'
         )
+
+    def referee_position(self, referee):
+        positions_dict = model_to_dict(self, fields=[
+            'referee',
+            'ar1',
+            'ar2',
+            'fourth_official',
+            'var',
+            'avar',
+            'fifth_official'
+        ])
+        position = [position for position, r_id in positions_dict.items() if referee.id == r_id][0]
+        return position if position else None

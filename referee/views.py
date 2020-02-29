@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Sum
 from django.shortcuts import render
 
@@ -13,11 +14,11 @@ def referees(request):
     counter = 1
     referees_list = []
     for ref in refs:
-        all = ref.all_assignments
-        debut = all.order_by('match_date').first() if all else ''
+        all_matches = ref.all_assignments.order_by('match_date')
+        debut = all_matches.first() if all_matches else ''
         ref_dict = {
             'name': ref.name_common,
-            'total_assignments_count': all.count(),
+            'total_assignments_count': all_matches.count(),
             'image_url': ref.image_url,
             'referee_url': '/referees/' + ref.referee_id,
             'debut_match': {
@@ -30,18 +31,20 @@ def referees(request):
         }
         referees_list.append(ref_dict)
         counter += 1
+    paginator = Paginator(referees_list, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context['referees'] = referees_list
     context['nbar'] = 'referees'
     return render(request, 'referees.html', context)
 
+
 def referee_bio(request, referee_id):
+
     referee = Referee.objects.get(referee_id=referee_id)
     matches = referee.all_assignments.all().order_by('match_date')
-    context = {}
 
-    is_referee = bool(referee.referee_matches.count())
-    
-    if is_referee:
+    if referee.is_referee:
         career_totals = {
             'centers': referee.referee_matches.count(),
             'fourths': referee.fourth_official_matches.count(),
@@ -50,6 +53,14 @@ def referee_bio(request, referee_id):
             'fouls': Match.objects.filter(referee=referee).aggregate(Sum('total_fouls'))['total_fouls__sum'],
             'penalties': Penalty.objects.filter(referee=referee).count()
         }
+
+        career_averages = {
+            'yellow_cards': round(career_totals['yellow_cards'] / referee.referee_matches.count(), 2),
+            'red_cards': round(referee.referee_matches.count() / career_totals['red_cards'], 2),
+            'fouls': round(career_totals['fouls'] / referee.referee_matches.count(), 2),
+            'penalties': round(referee.referee_matches.count() / career_totals['penalties'], 2)
+        }
+
     else:
         career_totals = {
             'total_assignments': referee.ar_assignments.count(),
@@ -57,14 +68,6 @@ def referee_bio(request, referee_id):
             'ar2': referee.ar2_matches.count()
         }
 
-    if is_referee:
-        career_averages = {
-            'yellow_cards': round(career_totals['yellow_cards'] / referee.referee_matches.count(), 2),
-            'red_cards': round(referee.referee_matches.count() / career_totals['red_cards'], 2),
-            'fouls': round(career_totals['fouls'] / referee.referee_matches.count(), 2),
-            'penalties': round(referee.referee_matches.count() / career_totals['penalties'], 2)
-        }
-    else:
         career_averages = {
             'yellow_cards': 0,
             'red_cards': 0,
@@ -72,12 +75,12 @@ def referee_bio(request, referee_id):
             'penalties': 0
         }
 
-    print(career_averages['yellow_cards'])
-    
-    context['referee'] = referee
-    context['matches'] = matches
-    context['first_match'] = matches.first()
-    context['last_match'] = matches.last()
-    context['career_totals'] = career_totals
-    context['career_averages'] = career_averages
-    return render(request, 'referee.html', context)
+    context = {
+        'referee': referee,
+        'matches': matches,
+        'first_match': matches.first(),
+        'last_match': matches.last(),
+        'career_totals': career_totals,
+        'career_averages': career_averages
+    }
+    return render(request, 'referee_bio.html', context)

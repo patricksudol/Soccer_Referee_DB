@@ -36,7 +36,7 @@
             <h5 class="card-title"><strong>Career Totals</strong></h5>
             <p class="card-text">
               <ul>
-                {% if career_totals.centers %}
+                {% if referee.is_referee %}
                 <li><strong>Centers: </strong>{{ career_totals.centers }}</li>
                 <li><strong>Fourth Officials: </strong>{{ career_totals.fourths }}</li>
                 <li><strong>Yellow Cards: </strong>{{ career_totals.yellow_cards }}</li>
@@ -54,25 +54,21 @@
             </p>
           </div>
         </div>
+        {% if referee.is_referee %}
         <div class="card">
           <div class="card-body">
-            {% if career_totals.centers%}
             <h5 class="card-title"><strong>Career Averages</strong></h5>
-            {% else %}
-            <h5 class="card-title">Most Frequently Worked With Referees</h5>
-            {% endif %}
             <p class="card-text">
               <ul>
-                {% if career_totals.centers %}
-                <li>{{ career_averages.yellow_cards }} Yellow Cards Per Game</li>
-                <li>1 Red Card Per {{ career_averages.red_cards }} Games</li>
-                <li>{{ career_averages.fouls }} Fouls Per Game</li>
-                <li>1 Penalty Per {{ career_averages.penalties }} Games</li>
-                {% endif %}
+                <li><strong>{{ career_averages.yellow_cards }}</strong> Yellow Cards Per Game</li>
+                <li>1 Red Card Per <strong>{{ career_averages.red_cards }}</strong> Games</li>
+                <li><strong>{{ career_averages.fouls }}</strong> Fouls Per Game</li>
+                <li>1 Penalty Per <strong>{{ career_averages.penalties }}</strong> Games</li>
               </ul>
             </p>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
     <div class="col-md-1"></div>

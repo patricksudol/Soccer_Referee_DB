@@ -116,4 +116,4 @@ class BaseModel(models.Model):
 
     def add_note(self, notes):
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        self.gp_notes += f'\n{now}: {note}'
+        self.notes += f'\n{now}: {notes}'

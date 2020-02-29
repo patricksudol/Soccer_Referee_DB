@@ -3,7 +3,7 @@ from base.views import index
 
 from config.urls import urlpatterns as config_urlpatterns
 from referee.urls import urlpatterns as referee_urlpatterns
-
+from organization.urls import urlpatterns as organization_urlpatterns
 
 # TODO: Abstract urls
 urlpatterns = [
@@ -12,3 +12,4 @@ urlpatterns = [
 
 urlpatterns += config_urlpatterns
 urlpatterns += referee_urlpatterns
+urlpatterns += organization_urlpatterns
