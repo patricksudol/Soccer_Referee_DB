@@ -111,6 +111,8 @@
             </th>
             <th class="th-sm">Away Penalties
             </th>
+            <th class="th-sm">Details
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -144,6 +146,7 @@
             <td>{{ match.away_cards_yellow }}</td>
             <td>{{ match.away_cards_red }}</td>
             <td>{{ match.away_penalties }}</td>
+            <td><button type="button" class="btn btn-indigo btn-sm m-0" data-toggle="modal" data-target="#gameModal">Details</button></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -177,11 +180,32 @@
             </th>
             <th>Away Penalties
             </th>
+            <th>Detals
+            </th>
           </tr>
         </tfoot>
       </table>
     </div>
     <div class="col-md-2"></div>
+  </div>
+</div>
+<div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-fluid modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Match</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <!--Card Codes Go Here-->
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
