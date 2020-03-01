@@ -119,28 +119,14 @@
           {% for match in matches %}
           <tr>
             <td>{{ match.match_date | date:'Y-m-d' }}</td>
-            {% if match.referee == referee %}
-            <td>Referee</td>
-            {% elif match.ar1 == referee %}
-            <td>AR1</td>
-            {% elif match.ar2 == referee %}
-            <td>AR2</td>
-            {% elif match.fourth_official == referee %}
-            <td>Fourth Official</td>
-            {% elif match.var == referee %}
-            <td>VAR</td>
-            {% elif match.avar == referee %}
-            <td>AVAR</td>
-            {% elif match.fifth_official == referee %}
-            <td>Fifth Official</td>
-            {% endif %}
-            <td>{{ match.home_club.name }}</td>
+            <td>{{ match.match_position }}</td>
+            <td>{{ match.home_club_name }}</td>
             <td><strong>{{ match.home_score }}</strong></td>
             <td>{{ match.home_fouls }}</td>
             <td>{{ match.home_cards_yellow }}</td>
             <td>{{ match.home_cards_red }}</td>
             <td>{{ match.home_penalties }}</td>
-            <td>{{ match.away_club.name }}</td>
+            <td>{{ match.away_club_name }}</td>
             <td><strong>{{ match.away_score }}</strong></td>
             <td>{{ match.away_fouls }}</td>
             <td>{{ match.away_cards_yellow }}</td>
@@ -200,7 +186,36 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First</th>
+              <th scope="col">Last</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="modal-footer">
         <!--Card Codes Go Here-->
