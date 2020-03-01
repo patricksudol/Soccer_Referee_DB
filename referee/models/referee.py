@@ -45,6 +45,14 @@ class Referee(BaseModel):
     def red_card_count(self):
         return self.redcard_set.count()
 
+    @property
+    def first_match(self):
+        return self.all_assignments.order_by('match_date').first()
+
+    @property
+    def last_match(self):
+        return self.all_assignments.order_by('match_date').last()
+
     # Hacky AF but placeholder into I can collect all images and host locally
     @property
     def image_url(self):
