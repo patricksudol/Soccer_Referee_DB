@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <a type="button" class="btn btn-secondary" href="/referees/page/1">Back</a>
+    <a type="button" class="btn btn-mdb-color" href="/referees/page/1">Back</a>
   </div>
   <br>
   <div class="row">
@@ -80,8 +80,8 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-      <table id="dtBasicExample" class="table table-sm table-bordered" cellspacing="0" width="100%">
-        <thead>
+      <table id="matchesTable" class="table table-sm table-hover table-striped table-bordered" cellspacing="0" width="100%">
+        <thead class="special-color white-text">
           <tr>
             <th class="th-sm">Date
             </th>
@@ -116,7 +116,7 @@
         <tbody>
           {% for match in matches %}
           <tr>
-            <td>{{ match.match_date }}</td>
+            <td>{{ match.match_date | date:'Y-m-d' }}</td>
             {% if match.referee == referee %}
             <td>Referee</td>
             {% elif match.ar1 == referee %}
@@ -147,7 +147,7 @@
           </tr>
           {% endfor %}
         </tbody>
-        <tfoot>
+        <tfoot class="special-color white-text">
           <tr>
             <th>Date
             </th>
@@ -157,7 +157,7 @@
             </th>
             <th>Home Score
             </th>
-            <th>Away Fouls
+            <th>Home Fouls
             </th>
             <th>Home Yellow Cards
             </th>
@@ -190,7 +190,7 @@
 <script>
   console.log('WOW');
   $(document).ready(function () {
-    $('#dtBasicExample').DataTable({
+    $('#matchesTable').DataTable({
       "pagingType": "first_last_numbers"
     });
     $('.dataTables_length').addClass('bs-select');

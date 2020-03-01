@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="{% static 'css/mdb.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/addons/datatables.min.css' %}">
+    <!-- <style>
+            body, .pagination, .page-link {
+                background-color: #111;
+            }
+            .card-body, .pagination, .page-link {
+                color: #50a8d8;
+                color: white;
+                background-color: #212121;
+            }
+            
+    </style> -->
 
 </head>
 
@@ -23,7 +34,7 @@
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
     <script src="{% static 'js/addons/datatables.min.js' %}"></script>
-    <nav class="navbar navbar-expand-lg navbar-dark default-color">
+    <nav class="navbar navbar-expand-lg navbar-dark stylish-color-dark">
         <a class="navbar-brand" href="/"><i class="fa fa-futbol-o"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,10 +43,10 @@
         <div class="collapse navbar-collapse" id="basicExampleNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {% if nbar == 'referees' %} active {% endif %}">
-                    <a class="nav-link" href="/referees/page/1">Referees</a>
+                    <a class="nav-link text-uppercase" href="/referees/page/1">Referees</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Clubs</a>
+                    <a class="nav-link text-uppercase" href="#">Clubs</a>
                 </li>
             </ul>
 
@@ -49,8 +60,8 @@
     {% block content %}
     {% endblock %}
     <!-- TODO: Anchor footer to bottom of page -->
-    <footer class="page-footer font-small navbar-dark default-color">
-        <div class="footer-copyright text-center py-3">© 2020 Copyright: DJ Perry
+    <footer class="page-footer font-small navbar-dark stylish-color-dark">
+        <div class="footer-copyright text-center text-uppercase py-3">© 2020 Copyright: DJ Perry
         </div>
     </footer>
     <!-- Footer -->
