@@ -35,7 +35,7 @@ class Referee(BaseModel):
 
     @property
     def all_assignments(self):
-        return self.referee_matches.all() | self.ar1_matches.all() | self.fourth_official_matches.all()
+        return self.referee_matches.all() | self.ar1_matches.all() | self.ar2_matches.all() | self.fourth_official_matches.all()
 
     @property
     def yellow_card_count(self):

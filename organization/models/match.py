@@ -145,17 +145,17 @@ class Match(BaseModel):
             crew_dictionary.update({'fifth_official': self.fifth_official})
         return crew_dictionary
 
-    @property
-    def yellow_cards(self):
-        return self.yellowcard_set.all()
+    # @property
+    # def yellow_cards(self):
+    #     return self.yellowcard_set.all()
 
-    @property
-    def red_cards(self):
-        return self.redcard_set.all()
+    # @property
+    # def red_cards(self):
+    #     return self.redcard_set.all()
 
-    @property
-    def penalties(self):
-        return self.penalties.all()
+    # @property
+    # def penalties(self):
+    #     return self.penalties.all()
 
     def __str__(self):
         return (

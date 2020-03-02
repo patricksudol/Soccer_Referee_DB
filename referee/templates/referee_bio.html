@@ -192,7 +192,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><strong>{{ match.match_date }}</strong>:
-          {{ match.home_club_name }}({{ match.home_score }}) vs {{ match.away_club_name }}({{ match.away_score }})</h5>
+          {{ match.home_club.name }}({{ match.home_score }}) vs {{ match.away_club.name }}({{ match.away_score }})</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -205,7 +205,7 @@
           <li>AR2: </li>
           <li>Fourth Official: </li>
         </ul>
-        {% if match.yellow_cards %}
+        {% if match.yellowcard_set.all %}
         <h3>Yellow Cards</h3>
         <table class="table table-sm table-hover table-striped table-bordered yellowCardTable">
           <thead class="special-color white-text">
@@ -217,7 +217,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for yellow in match.yellow_cards %}
+            {% for yellow in match.yellowcard_set.all %}
             <tr>
               <td>{{ yellow.minute }}</td>
               <td>{{ yellow.player_name }}</td>
@@ -244,7 +244,7 @@
           </tbody>
         </table>
         {% endif %}
-        {% if match.red_cards %}
+        {% if match.redcard_set.all %}
         <h3>Red Cards</h3>
         <table class="table table-sm table-hover table-striped table-bordered redCardTable">
           <thead class="special-color white-text">
@@ -257,7 +257,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for red in match.red_cards %}
+            {% for red in match.redcard_set.all %}
             <tr>
               <td>{{ red.minute }}</td>
               <td>{{ red.player_name }}</td>
@@ -268,7 +268,7 @@
           </tbody>
         </table>
         {% endif %}
-        {% if match.penalties %}
+        {% if match.penalties.all %}
         <h3>Penalties</h3>
         <table class="table table-sm table-hover table-striped table-bordered penaltyTable">
           <thead class="special-color white-text">
@@ -279,7 +279,7 @@
             </tr>
           </thead>
           <tbody>
-            {% for penalty in match.penalties %}
+            {% for penalty in match.penalties.all %}
             <tr>
               <td>{{ penalty.minute }}</td>
               <td>{{ penalty.club.name }}</td>
@@ -297,7 +297,6 @@
 </div>
 {% endif %}
 {% endfor %}
-
 {% endblock %}
 
 {% block scripts %}
@@ -308,7 +307,6 @@
     });
     $('.dataTables_length').addClass('bs-select');
   });
-  /*
   $(document).ready(function () {
     $('.yellowCardTable').DataTable({
       "searching": false,
@@ -333,6 +331,5 @@
   $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
-    */
 </script>
 {% endblock %}
