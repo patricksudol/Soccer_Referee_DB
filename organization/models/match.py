@@ -122,41 +122,6 @@ class Match(BaseModel):
 
     away_penalties = models.IntegerField(default=0)
 
-    @property
-    def is_sanction(self):
-        return bool(
-            self.yellowcard_set.all() or self.redcard_set.all() or self.penalties.all()
-        )
-
-    @property
-    def full_crew(self):
-        crew_dictionary = {
-            'referee': self.referee,
-            'ar1': self.ar1,
-            'ar2': self.ar2,
-            'fourth_offical': self.fourth_official,
-        }
-
-        if self.var:
-            crew_dictionary.update({'var': self.var})
-        if self.avar:
-            crew_dictionary.update({'avar': self.avar})
-        if self.fifth_official:
-            crew_dictionary.update({'fifth_official': self.fifth_official})
-        return crew_dictionary
-
-    # @property
-    # def yellow_cards(self):
-    #     return self.yellowcard_set.all()
-
-    # @property
-    # def red_cards(self):
-    #     return self.redcard_set.all()
-
-    # @property
-    # def penalties(self):
-    #     return self.penalties.all()
-
     def __str__(self):
         return (
             f'{self.match_date}: {self.home_club}'

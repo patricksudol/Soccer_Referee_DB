@@ -5,7 +5,6 @@ from referee.models import Referee
 from referee.utils.career_totals import (
     get_career_averages, get_career_totals, referee_info
 )
-from sanction.models import Penalty, RedCard, YellowCard
 
 
 def referees(request, page_number):
@@ -38,6 +37,13 @@ def referee_bio(request, referee_id):
 
     referee = Referee.objects.get(referee_id=referee_id)
     matches = referee.all_assignments.all().order_by('match_date')
+    matches_referee = matches.filter(referee=referee)
+    matches_ar1 = matches.filter(ar1=referee)
+    matches_ar2 = matches.filter(ar2=referee)
+    matches_fourth_official = matches.filter(fourth_official=referee)
+    matches_var = matches.filter(var=referee)
+    matches_avar = matches.filter(avar=referee)
+    matches_fifth_official = matches.filter(fifth_official=referee)
     
     career_totals = get_career_totals(referee)
     career_averages = get_career_averages(referee, career_totals)
@@ -45,6 +51,13 @@ def referee_bio(request, referee_id):
     context = {
         'referee': referee,
         'matches': matches,
+        'matches_referee': matches_referee,
+        'matches_ar1': matches_ar1,
+        'matches_ar2': matches_ar2,
+        'matches_fourth_official': matches_fourth_official,
+        'matches_var': matches_var,
+        'matches_avar': matches_avar,
+        'matches_fifth_official': matches_fifth_official,
         'first_match': matches.first(),
         'last_match': matches.last(),
         'career_totals': career_totals,
