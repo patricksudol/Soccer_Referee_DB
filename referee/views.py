@@ -59,7 +59,8 @@ def referee_bio(request, referee_id):
             'away_penalties': match.away_penalties,
             'yellow_cards': YellowCard.objects.filter(match=match),
             'red_cards': RedCard.objects.filter(match=match),
-            'penalties': Penalty.objects.filter(match=match)
+            'penalties': Penalty.objects.filter(match=match),
+            'is_sanction': bool(match.yellowcard_set.all() or match.redcard_set.all() or match.penalties.all())
         }
         match_list.append(match_dict)
 

@@ -80,7 +80,8 @@
   <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-      <table id="matchesTable" class="table table-sm table-hover table-striped table-bordered" cellspacing="0" width="100%">
+      <table id="matchesTable" class="table table-sm table-hover table-striped table-bordered" cellspacing="0"
+        width="100%">
         <thead class="special-color white-text">
           <tr>
             <th class="th-sm">Date
@@ -120,19 +121,27 @@
           <tr>
             <td>{{ match.match_date | date:'Y-m-d' }}</td>
             <td>{{ match.match_position }}</td>
-            <td>{{ match.home_club_name }}</td>
+            <td>{{ match.home_club.name }}</td>
             <td><strong>{{ match.home_score }}</strong></td>
             <td>{{ match.home_fouls }}</td>
             <td>{{ match.home_cards_yellow }}</td>
             <td>{{ match.home_cards_red }}</td>
             <td>{{ match.home_penalties }}</td>
-            <td>{{ match.away_club_name }}</td>
+            <td>{{ match.away_club.name }}</td>
             <td><strong>{{ match.away_score }}</strong></td>
             <td>{{ match.away_fouls }}</td>
             <td>{{ match.away_cards_yellow }}</td>
             <td>{{ match.away_cards_red }}</td>
             <td>{{ match.away_penalties }}</td>
-            <td><button type="button" class="btn btn-indigo btn-sm m-0" data-toggle="modal" data-target="#gameModal">Details</button></td>
+            <td>
+              {% if match.is_sanction %}
+              <button type="button" class="btn btn-indigo btn-sm m-0" data-toggle="modal"
+                data-target="#gameModal{{ match.match_id }}">Details</button>
+              {% else %}
+              <button type="button" class="btn btn-indigo btn-sm m-0" data-toggle="modal"
+                data-target="#gameModal{{ match.match_id }}" disabled>Details</button>
+              {% endif %}
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -175,64 +184,155 @@
     <div class="col-md-2"></div>
   </div>
 </div>
-<div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+{% for match in matches%}
+{% if match.is_sanction %}
+<div class="modal fade" id="gameModal{{match.match_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog modal-fluid modal-lg" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Match</h5>
+        <h5 class="modal-title" id="exampleModalLabel"><strong>{{ match.match_date }}</strong>:
+          {{ match.home_club_name }}({{ match.home_score }}) vs {{ match.away_club_name }}({{ match.away_score }})</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <table class="table">
-          <thead>
+        <h3>Referee Crew</h3>
+        <ul>
+          <li>Referee: </li>
+          <li>AR1: </li>
+          <li>AR2: </li>
+          <li>Fourth Official: </li>
+        </ul>
+        {% if match.yellow_cards %}
+        <h3>Yellow Cards</h3>
+        <table class="table table-sm table-hover table-striped table-bordered yellowCardTable">
+          <thead class="special-color white-text">
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Minute</th>
+              <th scope="col">Player</th>
+              <th scope="col">Club</th>
+              <th scope="col">Code</th>
             </tr>
           </thead>
           <tbody>
+            {% for yellow in match.yellow_cards %}
             <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+              <td>{{ yellow.minute }}</td>
+              <td>{{ yellow.player_name }}</td>
+              <td>{{ yellow.club.name }}</td>
+              {% if yellow.code == 'UB' %}
+              <td><a data-toggle="tooltip" title="Unsporting Behaviour">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'DR' %}
+              <td><a data-toggle="tooltip" title="Delaying the Restart">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'PI' %}
+              <td><a data-toggle="tooltip" title="Persistent Infringements">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'L' %}
+              <td><a data-toggle="tooltip" title="Leaving the Field of Play">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'DT' %}
+              <td><a data-toggle="tooltip" title="Dissent">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'E' %}
+              <td><a data-toggle="tooltip" title="Entering the Field of Play">{{ yellow.code }}</a></td>
+              {% elif yellow.code == 'FRD' %}
+              <td><a data-toggle="tooltip" title="Failure to Respect the Distance">{{ yellow.code }}</a></td>
+              {% else %}
+              <td>{{ yellow.code }}</td>
+              {% endif %}
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {% endfor %}
           </tbody>
         </table>
+        {% endif %}
+        {% if match.red_cards %}
+        <h3>Red Cards</h3>
+        <table class="table table-sm table-hover table-striped table-bordered redCardTable">
+          <thead class="special-color white-text">
+            <tr>
+              <th scope="col">Minute</th>
+              <th scope="col">Player</th>
+              <th scope="col">Club</th>
+              <th scope="col">Code
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for red in match.red_cards %}
+            <tr>
+              <td>{{ red.minute }}</td>
+              <td>{{ red.player_name }}</td>
+              <td>{{ red.club.name }}</td>
+              <td>{{ red.code }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+        {% if match.penalties %}
+        <h3>Penalties</h3>
+        <table class="table table-sm table-hover table-striped table-bordered penaltyTable">
+          <thead class="special-color white-text">
+            <tr>
+              <th scope="col">Minute</th>
+              <th scope="col">Club</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for penalty in match.penalties %}
+            <tr>
+              <td>{{ penalty.minute }}</td>
+              <td>{{ penalty.club.name }}</td>
+              <td>{{ penalty.foul_desc }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
       </div>
       <div class="modal-footer">
-        <!--Card Codes Go Here-->
       </div>
     </div>
   </div>
 </div>
+{% endif %}
+{% endfor %}
+
 {% endblock %}
 
 {% block scripts %}
 <script>
-  console.log('WOW');
   $(document).ready(function () {
     $('#matchesTable').DataTable({
       "pagingType": "first_last_numbers"
     });
     $('.dataTables_length').addClass('bs-select');
   });
+  /*
+  $(document).ready(function () {
+    $('.yellowCardTable').DataTable({
+      "searching": false,
+      "paging": false
+    });
+    $('.dataTables_length').addClass('bs-select');
+  });
+  $(document).ready(function () {
+    $('.redCardTable').DataTable({
+      "searching": false,
+      "paging": false
+    });
+    $('.dataTables_length').addClass('bs-select');
+  });
+  $(document).ready(function () {
+    $('.penaltyTable').DataTable({
+      "searching": false,
+      "paging": false
+    });
+    $('.dataTables_length').addClass('bs-select');
+  });
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
+    */
 </script>
 {% endblock %}
