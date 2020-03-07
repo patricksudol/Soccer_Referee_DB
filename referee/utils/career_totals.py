@@ -67,3 +67,14 @@ def _ar_totals(referee):
         'ar1': referee.ar1_matches.count(),
         'ar2': referee.ar2_matches.count()
     }
+
+def total_matches_by_position(referee, matches):
+    return {
+        'matches_referee': matches.filter(referee=referee),
+        'matches_ar1': matches.filter(ar1=referee),
+        'matches_ar2': matches.filter(ar2=referee),
+        'matches_fourth_official': matches.filter(fourth_official=referee),
+        'matches_var': matches.filter(var=referee),
+        'matches_avar': matches.filter(avar=referee),
+        'matches_fifth_official': matches.filter(fifth_official=referee),
+    }
