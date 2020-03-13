@@ -38,7 +38,7 @@ def referee_bio(request, referee_id):
 
     referee = Referee.objects.get(referee_id=referee_id)
     matches = referee.all_assignments.all().order_by('match_date')
-    
+
     career_totals = get_career_totals(referee)
     career_averages = get_career_averages(referee, career_totals)
 

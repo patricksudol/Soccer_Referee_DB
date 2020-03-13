@@ -2,12 +2,25 @@
 
 {% block content %}
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="input-group md-form form-sm form-1 pl-0">
+                <div class="input-group-prepend">
+                    <span class="input-group-text cyan lighten-2" id="basic-text1"><i class="fas fa-search text-white"
+                            aria-hidden="true"></i></span>
+                </div>
+                <input id="searchBox" class="form-control my-0 py-1" type="text" placeholder="Search" aria-label="Search">
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
     <br>
     <div class="container-fluid">
         {% for referee in page_obj %}
         {% if referee.first_in_row or referee.count == 1 %}
         <br>
-        <div class="row">
+        <div class="row cardDeck">
             <div class="col-md-2"></div>
             {% endif %}
             <div class="col-md-2">
@@ -58,4 +71,13 @@
     </div>
 </div>
 
+{% endblock %} 
+{% block scripts %}
+<script>
+    $('#searchBox').keyup(function (){
+        $('.card').removeClass('d-none');
+        var filter = $(this).val(); // get the value of the input, which we filter on
+        $('.cardDeck').find('.card .card-body h4:not(:contains("'+filter+'"))').parent().parent().addClass('d-none');
+    })
+</script>
 {% endblock %}
