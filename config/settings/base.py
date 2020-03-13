@@ -80,9 +80,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -139,9 +136,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "staticfiles"),
 ]
 
-###############################################################################
 # Shell_plus
-###############################################################################
 SHELL_PLUS_POST_IMPORTS = (
     'base.management.shell_plus_warning',
 )

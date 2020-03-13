@@ -13,9 +13,9 @@ from django.db import models, transaction
 class BaseModel(models.Model):
 
     id = models.UUIDField(
-        primary_key=True, 
-        unique=True, 
-        editable=False, 
+        primary_key=True,
+        unique=True,
+        editable=False,
         default=uuid.uuid4
     )
 

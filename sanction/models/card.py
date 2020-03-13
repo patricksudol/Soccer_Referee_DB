@@ -7,13 +7,13 @@ from referee.models.referee import Referee
 
 
 class AbstractCardModel(BaseModel):
-    
+
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
 
     referee = models.ForeignKey(
-        Referee, 
+        Referee,
         on_delete=models.CASCADE, 
-        null=True, 
+        null=True,
         blank=True
     )
 
@@ -37,7 +37,7 @@ class AbstractCardModel(BaseModel):
 class YellowCard(AbstractCardModel):
 
     club = models.ForeignKey(
-        Club, 
+        Club,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -46,7 +46,7 @@ class YellowCard(AbstractCardModel):
 
     # TODO: Clearer related name
     opponent_club = models.ForeignKey(
-        Club, 
+        Club,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -65,7 +65,7 @@ class YellowCard(AbstractCardModel):
 class RedCard(AbstractCardModel):
     
     club = models.ForeignKey(
-        Club, 
+        Club,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -74,7 +74,7 @@ class RedCard(AbstractCardModel):
 
     # TODO: Clearer related name
     opponent_club = models.ForeignKey(
-        Club, 
+        Club,
         on_delete=models.CASCADE,
         null=True,
         blank=True,
