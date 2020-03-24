@@ -21,6 +21,8 @@ ptyprocess==0.6.0
 pycodestyle==2.5.0
 Pygments==2.5.2
 pylint==2.4.4
+pylint-django==2.0.13
+pylint-plugin-utils==0.6
 pytz==2019.3
 six==1.14.0
 sqlparse==0.3.0
