@@ -18,7 +18,7 @@
     <br>
     <div class="container-fluid">
         {% for referee in page_obj %}
-        {% if referee.first_in_row or referee.count == 1 %}
+        {% if referee.first_in_row or forloop.first %}
         <br>
         <div class="row cardDeck">
             <div class="col-md-2"></div>

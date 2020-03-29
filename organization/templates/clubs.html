@@ -18,6 +18,28 @@
     <br>
     <div class="container-fluid">
         {% for club in clubs %}
+        {% if forloop.first or club.first_in_row%}
+        <br>
+        <div class="row cardDeck">
+            <div class="col-md-2"></div>
+            {% endif %}
+            <div class="col-md-2">
+                <div class="card">
+                    <img class="card-img-top" src="https://res-2.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_120,w_120,f_auto,b_white,q_auto:eco/l8up0qozbfayyloejx3x">
+                    <div class="card-body">
+                        <h4 class="card-title"><strong>{{ club.club_obj.name }}</strong></h4><br>
+                        <p class="card-text">
+                            <strong>Total Matches: </strong> {{ club.club_obj.all_matches.count }}<br>
+                            <strong>Total Yellow Cards: </strong> {{ club.club_obj.yellow_cards.count }}<br>
+                            <strong>Total Red Cards: </strong> {{ club.club_obj.red_cards.count }}
+                        </p>
+                        <a href="/clubs/{{ club.club_obj.club_id }}" class="btn btn-primary">Statistics</a>
+                    </div>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
+            <div class="col-md-2"></div>
+        {% endif %}
         {% endfor %}
     </div>
 </div>

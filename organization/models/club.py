@@ -11,6 +11,10 @@ class Club(BaseModel):
 
     is_active = models.BooleanField(default=True)
 
+    @property
+    def all_matches(self):
+        return self.home_matches.all() | self.away_matches.all()
+
     def __str__(self):
         status = 'active' if self.is_active else 'not active'
         return f'{self.name} [{self.club_id}] is {status}'

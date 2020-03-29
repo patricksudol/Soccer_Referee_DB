@@ -1,0 +1,49 @@
+{% extends "base/base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <a type="button" class="btn btn-mdb-color" href="/clubs">Back</a>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+            <h4><strong>{{ club.name }}</strong></h4>
+        </div>
+        <div class="col-md-9"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <table id="refereeTable" class="table table-sm table-hover table-striped table-bordered" cellspacing="0" width=100%>
+                <thead class="special-color white-text">
+                    <tr>
+                        <th class="th-sm">Referee</th>
+                        <th class="th-sm">Matches Count</th>
+                        <th class="th-sm">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ref_obj in ref_objs %}
+                    <tr>
+                        <td><a href="/referees/{{ ref_obj.referee.referee_id }}">{{ ref_obj.referee.name_common }}</a></td>
+                        <td>{{ ref_obj.matches.count }}</td>
+                        <td>{{ ref_obj.referee.is_active }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    $(document).ready(function () {
+        $('#refereeTable').DataTable({
+          "pagingType": "first_last_numbers"
+        });
+        $('.dataTables_length').addClass('bs-select');
+      });  
+</script>
+{% endblock %}
