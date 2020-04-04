@@ -21,13 +21,13 @@
             <p class="card-text">
               <ul>
                 <li>
-                  <strong>First Match: </strong>{{ first_match.match_date}}<br>
-                  {{ first_match.home_club.name }} vs {{ first_match.away_club.name }}
+                  <strong>First Match: </strong>{{ matches.first.match_date}}<br>
+                  {{ matches.first.home_club.name }} vs {{ matches.first.away_club.name }}
                 </li>
                 <br>
                 <li>
-                  <strong>Latest Match: </strong>{{ last_match.match_date}}<br>
-                  {{ last_match.home_club.name }} vs {{ last_match.away_club.name }}
+                  <strong>Latest Match: </strong>{{ matches.last.match_date}}<br>
+                  {{ matches.last.home_club.name }} vs {{ matches.last.away_club.name }}
                 </li>
               </ul>
             </p>

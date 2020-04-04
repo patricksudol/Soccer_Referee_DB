@@ -45,8 +45,6 @@ def referee_bio(request, referee_id):
     context = {
         'referee': referee,
         'matches': matches,
-        'first_match': matches.first(),
-        'last_match': matches.last(),
         'career_totals': career_totals,
         'career_averages': career_averages,
         'nbar': 'referees'
