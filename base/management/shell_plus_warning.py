@@ -44,7 +44,7 @@ def __warn_shell():
     if sys.argv[1] == 'shell_plus':
         _warn_msg = dedent("""
         #######################################################################
-        LOL....libtard. Are you ready for the Trump Train?
+        LOL....Do you really want this?
         #######################################################################
         """)
         print(ColorEncoding.wrap('fail', _warn_msg))
