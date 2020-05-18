@@ -12,7 +12,7 @@ from organization.serializers import ClubsSerializer
 #     clubs = []
 #     for counter, club in enumerate(clubs_query, start=1):
 #         club = {
-#             'club_obj': club,
+#             'club_obj': clubl,
 #             'first_in_row': True if counter % 4 == 1 else False
 #         }
 #         clubs.append(club)
@@ -33,22 +33,21 @@ from organization.serializers import ClubsSerializer
 #         }
 #         ref_objs.append(ref_obj)
     
-#     context = {'nbar': 'clubs', 'club': club, 'ref_objs': ref_objs}
-#     return render(request, 'club.html', context)
+    # context = {'nbar': 'clubs', 'club': club, 'ref_objs': ref_objs}
+    # return render(request, 'club.html', context)
 
 
 class ClubsViewSet(viewsets.ViewSet):
+
     queryset = Club.objects.all()
 
-    authentication_classes = []
-    permission_classes = []
-
     def list(self, request):
-        clubs = [club.is_active for club in Club.objects.all()]
-        return Response(clubs)
-
-    def retrieve(self, request, club_id=None):
         queryset = Club.objects.all()
-        club = get_object_or_404(queryset, club_id=club_id)
+        serializer = ClubsSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        queryset = Club.objects.all()
+        club = get_object_or_404(queryset, pk=pk)
         serializer = ClubsSerializer(club)
         return Response(serializer.data)
