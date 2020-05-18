@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import serializers, viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from referee.models import Referee
 from organization.models import Club, Match
@@ -35,10 +37,18 @@ from organization.serializers import ClubsSerializer
 #     return render(request, 'club.html', context)
 
 
-class ClubsViewSet(viewsets.ModelViewSet):
+class ClubsViewSet(viewsets.ViewSet):
     queryset = Club.objects.all()
-    serializer_class = ClubsSerializer
 
+    authentication_classes = []
+    permission_classes = []
 
-class ClubInfoViewSet(viewsets.ModelViewSet):
-    pass
+    def list(self, request):
+        clubs = [club.is_active for club in Club.objects.all()]
+        return Response(clubs)
+
+    def retrieve(self, request, club_id=None):
+        queryset = Club.objects.all()
+        club = get_object_or_404(queryset, club_id=club_id)
+        serializer = ClubsSerializer(club)
+        return Response(serializer.data)
