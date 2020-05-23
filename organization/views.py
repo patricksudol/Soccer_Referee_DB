@@ -1,23 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import serializers, viewsets
-from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.response import Response
 
-from referee.models import Referee
-from organization.models import Club, Match
+from organization.models import Club
 from organization.serializers import ClubsSerializer
-
-# def clubs(request):
-#     clubs_query = Club.objects.all()
-#     clubs = []
-#     for counter, club in enumerate(clubs_query, start=1):
-#         club = {
-#             'club_obj': clubl,
-#             'first_in_row': True if counter % 4 == 1 else False
-#         }
-#         clubs.append(club)
-#     context = {'nbar': 'clubs', 'clubs': clubs}
-#     return render(request, 'clubs.html', context)
 
 # def club_bio(request, club_id):
 #     club = Club.objects.get(club_id=club_id)

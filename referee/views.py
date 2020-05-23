@@ -1,5 +1,7 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from rest_framework import viewsets
 
 from referee.models import Referee
 from referee.utils.career_totals import (
@@ -51,3 +53,16 @@ def referee_bio(request, referee_id):
     }
     context.update(total_matches_by_position(referee, matches))
     return render(request, 'referee_bio.html', context)
+
+
+class RefereeViewSet(viewsets.ViewSet):
+    def list(self, request):
+        queryset = Referee.objects.all()
+        serializer = RefereeSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Referee.objects.all()
+        referee = get_object_or_404(queryset, pk=pk)
+        serializer = RefereeSerializer(referee)
+        return Response(serializer.data)

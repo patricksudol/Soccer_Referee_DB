@@ -1,6 +1,6 @@
 from django. urls import *
 from rest_framework import routers
-# from organization.views import clubs, club_bio
+
 from organization.views import *
 
 router = routers.DefaultRouter()
