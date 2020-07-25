@@ -1,0 +1,18 @@
+version: '3'
+
+servics:
+    db:
+        image: postgres
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=soccerrefereedbuser
+            - POSTGRES_PASSWORD=EbyOJdKaRJ4C3oLN
+    web:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/Soccer_Referee_DB
+        ports:
+            - "8000:8000"
+        depends_on: 
+            - db
