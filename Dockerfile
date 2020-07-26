@@ -4,4 +4,4 @@ RUN mkdir /Soccer_Referee_DB
 WORKDIR /Soccer_Referee_DB
 COPY requirements.txt /Soccer_Referee_DB/settings/deps/
 RUN pip install -r requirements.txt
-COPY . /code/
+COPY . /Soccer_Referee_DB

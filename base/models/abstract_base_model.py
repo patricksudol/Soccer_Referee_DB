@@ -10,7 +10,33 @@ from django.utils import timezone
 from django.db import models, transaction
 
 
-class BaseModel(models.Model):
+class TrackingMixin(models.Model):
+
+    created_at = models.DateTimeField(default=timezone.now)
+
+    modified_at = models.DateTimeField(auto_now=True)
+
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        related_name='created_%(class)ss',
+        on_delete=models.CASCADE
+    )
+
+    modified_by = models.ForeignKey(
+        User,
+        null=True,
+        related_name='modified_%(class)ss',
+        on_delete=models.CASCADE
+    )
+
+    notes = models.TextField(blank=True, default='')
+
+    class Meta:
+        abstract = True
+
+
+class UUIDMixin(models.Model):
 
     id = models.UUIDField(
         primary_key=True,
@@ -19,25 +45,11 @@ class BaseModel(models.Model):
         default=uuid.uuid4
     )
 
-    created_at = models.DateTimeField(default=timezone.now)
+    class Meta:
+        abstract = True
 
-    modified_at = models.DateTimeField(auto_now=True)
 
-    created_by = models.ForeignKey(
-        User, 
-        null=True, 
-        related_name='created_%(class)ss', 
-        on_delete=models.CASCADE
-    )
-
-    modified_by = models.ForeignKey(
-        User, 
-        null=True, 
-        related_name='modified_%(class)ss',
-        on_delete=models.CASCADE
-    )
-
-    notes = models.TextField(blank=True, default='')
+class BaseModel(UUIDMixin, TrackingMixin):
 
     class Meta:
         abstract = True
